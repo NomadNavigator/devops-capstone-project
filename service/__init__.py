@@ -6,7 +6,8 @@ and SQL database
 """
 import sys
 from flask import Flask
-from flask_talisman import Talisman  # Import the Talisman class
+from flask_talisman import Talisman
+from flask_cors import CORS  # Import the CORS class
 from service import config
 from service.common import log_handlers
 
@@ -16,6 +17,9 @@ app.config.from_object(config)
 
 # Initialize Talisman for security headers
 talisman = Talisman(app)
+
+# Initialize CORS for handling cross-origin requests
+CORS(app)  # Allow all domains to access the API
 
 # Import the routes After the Flask app is created
 # pylint: disable=wrong-import-position, cyclic-import, wrong-import-order
@@ -39,3 +43,4 @@ except Exception as error:  # pylint: disable=broad-except
     sys.exit(4)
 
 app.logger.info("Service initialized!")
+
