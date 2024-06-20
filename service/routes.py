@@ -130,4 +130,5 @@ def delete_accounts(account_id):
         account.delete()
 
     return "", status.HTTP_204_NO_CONTENT
-    
+
+# dahir: Removed blank line at the end of the file to fix flake8 W391 warning and trailing whitespace for W293
