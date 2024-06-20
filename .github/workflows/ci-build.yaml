@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: python:3.9-slim
 
     services:
       postgres:
@@ -42,9 +41,13 @@ jobs:
           flake8 service --count --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Run unit tests with nose
-        run: nosetests
+        run: |
+          pip install nose coverage
+          coverage run -m nose
+          coverage report -m
         env:
-          DATABASE_URI: "postgresql://postgres:pgs3cr3t@postgres:5432/testdb"
+          DATABASE_URI: postgresql://postgres:pgs3cr3t@localhost:5432/testdb
+
 
 
 
