@@ -8,10 +8,12 @@ from service.models import Account
 from service.common import status  # HTTP Status Codes
 from . import app  # Import Flask application
 
+
 def check_content_type(content_type):
     """Checks that the media type is correct"""
     if request.headers["Content-Type"] != content_type:
         abort(status.HTTP_415_UNSUPPORTED_MEDIA_TYPE, f"Content-Type must be {content_type}")
+
 
 ############################################################
 # Health Endpoint
@@ -20,6 +22,7 @@ def check_content_type(content_type):
 def health():
     """Health Status"""
     return jsonify(dict(status="OK")), status.HTTP_200_OK
+
 
 ######################################################################
 # GET INDEX
@@ -34,6 +37,7 @@ def index():
         ),
         status.HTTP_200_OK,
     )
+
 
 ######################################################################
 # CREATE A NEW ACCOUNT
@@ -55,6 +59,7 @@ def create_accounts():
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
 
+
 ######################################################################
 # LIST ALL ACCOUNTS
 ######################################################################
@@ -68,6 +73,7 @@ def list_accounts():
     accounts = Account.all()
     account_list = [account.serialize() for account in accounts]
     return make_response(jsonify(account_list), status.HTTP_200_OK)
+
 
 ######################################################################
 # READ AN ACCOUNT
@@ -85,6 +91,7 @@ def get_accounts(account_id):
         abort(status.HTTP_404_NOT_FOUND, f"Account with id [{account_id}] could not be found.")
 
     return jsonify(account.serialize()), status.HTTP_200_OK
+
 
 ######################################################################
 # UPDATE AN EXISTING ACCOUNT
@@ -106,6 +113,7 @@ def update_accounts(account_id):
 
     return jsonify(account.serialize()), status.HTTP_200_OK
 
+
 ######################################################################
 # DELETE AN ACCOUNT
 ######################################################################
@@ -122,3 +130,4 @@ def delete_accounts(account_id):
         account.delete()
 
     return "", status.HTTP_204_NO_CONTENT
+    
