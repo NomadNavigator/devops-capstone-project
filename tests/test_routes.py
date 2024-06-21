@@ -5,7 +5,7 @@ Test cases can be run with the following:
   nosetests -v --with-spec --spec-color
   coverage report -m
 """
-# Other import statements
+# Import statements
 import os
 import logging
 from unittest import TestCase
@@ -22,7 +22,7 @@ DATABASE_URI = os.getenv(
 BASE_URL = "/accounts"
 HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 
-# Make sure there's a blank line before this line if it's a function or class definition
+# Ensure 2 blank lines before class definition
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
@@ -203,3 +203,5 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Check for the CORS header
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
+
+
