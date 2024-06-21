@@ -50,6 +50,20 @@ spec:
       runAfter:
         - clone
 
+    - name: tests
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+      taskRef:
+        name: nose
+      params:
+        - name: database_uri
+          value: "sqlite:///test.db"
+        - name: args
+          value: "-v --with-spec --spec-color"
+      runAfter:
+        - lint
+
     - name: build
       workspaces:
         - name: source
@@ -61,7 +75,7 @@ spec:
         - name: IMAGE
           value: "$(params.build-image)"
       runAfter:
-        - lint
+        - tests
 
     - name: deploy
       workspaces:
@@ -80,4 +94,5 @@ spec:
           oc apply -f deploy/
           oc get pods -l app=accounts
       runAfter:
-        - build       
+        - build
+
